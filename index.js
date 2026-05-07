@@ -26,10 +26,10 @@ app.get("/api/hello", function (req, res) {
 
 // Route: /date/:dateString ---->takes in a date as a parameter and responds with a json
 app.get('/api/:date?', (req, res) => {
-  const date = req.params.date;
+  let date = req.params.date;
 
   // If no date is provided, use current date
-  const date = date ? new Date(date) : new Date();
+  date = date ? new Date(date) : new Date();
 
   // Handle invalid date
   if (isNaN(date.getTime())) {
