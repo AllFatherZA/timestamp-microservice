@@ -33,8 +33,8 @@ app.get('/api/:date?', (req, res) => {
     // No parameter → current date
     date = new Date();
   } else if (/^\d+$/.test(dateParam)) {
-    // If the parameter is all digits → treat as Unix timestamp (seconds)
-    date = new Date(parseInt(dateParam) * 1000);
+    // Numeric → treat as Unix timestamp (milliseconds)
+    date = new Date(parseInt(dateParam));
   } else {
     // Otherwise → treat as date string
     date = new Date(dateParam);
@@ -45,7 +45,7 @@ app.get('/api/:date?', (req, res) => {
     return res.json({ error: "Invalid Date" });
   }
 
-  const unix = Math.floor(date.getTime() / 1000);
+  const unix = date.getTime(); // milliseconds
   const utc = date.toUTCString();
 
   res.json({
@@ -53,7 +53,6 @@ app.get('/api/:date?', (req, res) => {
     utc: utc
   });
 });
-
 
 
 // Listen on port set in environment variable or default to 3000
