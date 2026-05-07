@@ -26,10 +26,19 @@ app.get("/api/hello", function (req, res) {
 
 // Route: /date/:dateString ---->takes in a date as a parameter and responds with a json
 app.get('/api/:date?', (req, res) => {
-  let date = req.params.date;
+  let dateParam = req.params.date;
+  let date;
 
-  // If no date is provided, use current date
-  date = date ? new Date(date) : new Date();
+  if (!dateParam) {
+    // No parameter → current date
+    date = new Date();
+  } else if (/^\d+$/.test(dateParam)) {
+    // If the parameter is all digits → treat as Unix timestamp (seconds)
+    date = new Date(parseInt(dateParam) * 1000);
+  } else {
+    // Otherwise → treat as date string
+    date = new Date(dateParam);
+  }
 
   // Handle invalid date
   if (isNaN(date.getTime())) {
