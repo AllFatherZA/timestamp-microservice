@@ -24,7 +24,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-// Route: /date/:dateString
+// Route: /date/:dateString ---->takes in a date as a parameter and responds with a json
 app.get('/api/:date', (req, res) => {
   const dateString = req.params.date;
   const date = new Date(dateString);
